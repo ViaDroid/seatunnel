@@ -193,6 +193,27 @@ public class TablePlaceholderProcessor {
                         }
                         copyOnWriteData.put(key, listValue);
                     }
+                } else if (value instanceof Map) {
+                    Map<String, Object> mapValue = (Map) value;
+                    Map<String, Object> copyOnMapValue = ObjectUtils.clone(mapValue);
+                    for (String subKey : mapValue.keySet()) {
+                        Object subValue = mapValue.get(subKey);
+
+                        if (subValue instanceof String) {
+                            String strValue = (String) subValue;
+                            strValue = replaceTableIdentifier(strValue, table.getTableId());
+                            strValue =
+                                    replaceTablePrimaryKey(
+                                            strValue, table.getTableSchema().getPrimaryKey());
+                            strValue =
+                                    replaceTableUniqueKey(
+                                            strValue, table.getTableSchema().getConstraintKeys());
+                            strValue = replaceTableFieldNames(strValue, table.getTableSchema());
+
+                            copyOnMapValue.put(subKey, strValue);
+                        }
+                    }
+                    copyOnWriteData.put(key, copyOnMapValue);
                 }
             }
         }

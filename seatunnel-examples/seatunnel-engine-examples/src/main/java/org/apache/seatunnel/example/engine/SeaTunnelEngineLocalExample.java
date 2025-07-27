@@ -36,7 +36,18 @@ public class SeaTunnelEngineLocalExample {
 
     public static void main(String[] args)
             throws FileNotFoundException, URISyntaxException, CommandException {
-        String configurePath = args.length > 0 ? args[0] : "/examples/fake_to_console.conf";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver"); // 加载驱动
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+//        String configurePath = args.length > 0 ? args[0] : "/examples/fake_to_console.conf";
+//        String configurePath = args.length > 0 ? args[0] : "/examples/fake_to_http.conf";
+//        String configurePath = args.length > 0 ? args[0] : "/examples/mysqlcdc_to_http.conf";
+//        String configurePath = args.length > 0 ? args[0] : "/examples/mysqlcdc_to_jdbc.conf";
+//        String configurePath = args.length > 0 ? args[0] : "/examples/mysqlcdc_to_mqhttp.conf";
+        String configurePath = args.length > 0 ? args[0] : "/examples/rabbitmq_to_jdbc.conf";
         String configFile = getTestConfigFile(configurePath);
         ClientCommandArgs clientCommandArgs = new ClientCommandArgs();
         clientCommandArgs.setConfigFile(configFile);

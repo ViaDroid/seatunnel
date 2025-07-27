@@ -5,7 +5,7 @@ ARG VERSION
 COPY ./target/apache-seatunnel-${VERSION}-bin.tar.gz /opt/
 RUN cd /opt && \
     tar -zxvf apache-seatunnel-${VERSION}-bin.tar.gz && \
-    mv apache-seatunnel-${VERSION} seatunnel && \
+    mv apache-seatunnel-${VERSION}-SNAPSHOT seatunnel && \
     rm apache-seatunnel-${VERSION}-bin.tar.gz && \
     sed -i 's/#rootLogger.appenderRef.consoleStdout.ref/rootLogger.appenderRef.consoleStdout.ref/' seatunnel/config/log4j2.properties && \
     sed -i 's/#rootLogger.appenderRef.consoleStderr.ref/rootLogger.appenderRef.consoleStderr.ref/' seatunnel/config/log4j2.properties && \
